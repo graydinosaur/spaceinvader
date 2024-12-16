@@ -11,6 +11,16 @@ public class SpaceInvaders extends JPanel{
     int boardWidth = tileSize * columns;
     int boardHeight = tileSize * rows;
 
+    //variables images
+    Image shipImg;
+    Image alienImg;
+    Image alienCyanImg;
+    Image alienMagentaImg;
+    Image alienYellowImg;
+
+    //store in array
+    ArrayList<Image> alienImArray;
+
     // constructor
     SpaceInvaders() {
         setPreferredSize(new Dimension(boardWidth,boardHeight));

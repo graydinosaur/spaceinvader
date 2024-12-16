@@ -9,10 +9,14 @@ public class App {
         int boardHeight = tileSize * rows;
 
         JFrame frame = new JFrame("Space invaders");
-        frame.setVisible(true);
         frame.setSize(boardHeight,boardWidth);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        SpaceInvaders spaceInvaders = new SpaceInvaders();
+        frame.add(spaceInvaders);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
