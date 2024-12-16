@@ -2,19 +2,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class SpaceInvaders extends JPanel implements ActionListener {
+public class SpaceInvaders extends JPanel implements ActionListener, KeyListener {
     class Block {
-        int x; // Corrected from 'a'
+        int x;
         int y;
         int width;
         int height;
         Image img;
-        boolean alive = true; // Added semicolon
-        boolean used = false; // Added semicolon
+        boolean alive = true;
+        boolean used = false;
 
         // Constructor
         Block(int x, int y, int width, int height, Image img) {
@@ -41,20 +46,24 @@ public class SpaceInvaders extends JPanel implements ActionListener {
     Image alienYellowImg;
 
     // Store in array
-    ArrayList<Image> alienImgArray; // Corrected from 'allieiimgarray'
+    ArrayList<Image> alienImgArray;
 
     // Ship
     int shipWidth = tileSize * 2;
     int shipHeight = tileSize;
     int shipX = tileSize * columns / 2 - tileSize;
     int shipY = boardHeight - tileSize * 2;
+    int shipVelocityX = tileSize;
+    Block ship;
 
-    Block ship; // Declare the ship as a Block object
     Timer gameloop;
+
     // Constructor
     SpaceInvaders() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
         setBackground(Color.BLACK);
+        setFocusable(true);
+        addKeyListener(this);
 
         // Load images
         shipImg = new ImageIcon(getClass().getResource("./images/ship.png")).getImage();
@@ -72,7 +81,9 @@ public class SpaceInvaders extends JPanel implements ActionListener {
 
         // Initialize the ship as a Block object
         ship = new Block(shipX, shipY, shipWidth, shipHeight, shipImg);
-        gameloop = new Timer(1000/60, this);
+
+        // Initialize the game loop
+        gameloop = new Timer(1000 / 60, this);
         gameloop.start();
     }
 
@@ -84,10 +95,38 @@ public class SpaceInvaders extends JPanel implements ActionListener {
 
     public void draw(Graphics g) {
         // Draw the ship
-        g.drawImage(ship.img, ship.x, ship.y, ship.width, ship.height, null); // Fixed 'ship.shipimg' to 'ship.img'
+        g.drawImage(ship.img, ship.x, ship.y, ship.width, ship.height, null);
     }
+
     @Override
-    public void actionPerformed(ActionEvent e){
+    public void actionPerformed(ActionEvent e) {
         repaint();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        // Handle continuous key presses if needed
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // Check which key the user pressed
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            ship.x -= shipVelocityX; // Move left
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            ship.x += shipVelocityX; // Move right
+        }
+
+        // Ensure the ship stays within the board bounds
+        if (ship.x < 0) {
+            ship.x = 0;
+        } else if (ship.x + ship.width > boardWidth) {
+            ship.x = boardWidth - ship.width;
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Not used, but required for KeyListener
     }
 }
