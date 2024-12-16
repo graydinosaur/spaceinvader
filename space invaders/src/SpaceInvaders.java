@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class SpaceInvaders extends JPanel {
+public class SpaceInvaders extends JPanel implements ActionListener {
     class Block {
         int x; // Corrected from 'a'
         int y;
@@ -50,7 +50,7 @@ public class SpaceInvaders extends JPanel {
     int shipY = boardHeight - tileSize * 2;
 
     Block ship; // Declare the ship as a Block object
-
+    Timer gameloop;
     // Constructor
     SpaceInvaders() {
         setPreferredSize(new Dimension(boardWidth, boardHeight));
@@ -72,6 +72,8 @@ public class SpaceInvaders extends JPanel {
 
         // Initialize the ship as a Block object
         ship = new Block(shipX, shipY, shipWidth, shipHeight, shipImg);
+        gameloop = new Timer(1000/60, this);
+        gameloop.start();
     }
 
     @Override
@@ -83,5 +85,9 @@ public class SpaceInvaders extends JPanel {
     public void draw(Graphics g) {
         // Draw the ship
         g.drawImage(ship.img, ship.x, ship.y, ship.width, ship.height, null); // Fixed 'ship.shipimg' to 'ship.img'
+    }
+    @Override
+    public void actionPerformed(ActionEvent e){
+        repaint();
     }
 }
