@@ -17,7 +17,6 @@ public class SpaceInvaders extends JPanel{
     Image alienCyanImg;
     Image alienMagentaImg;
     Image alienYellowImg;
-
     //store in array
     ArrayList<Image> alienImArray;
 
@@ -25,5 +24,14 @@ public class SpaceInvaders extends JPanel{
     SpaceInvaders() {
         setPreferredSize(new Dimension(boardWidth,boardHeight));
         setBackground(Color.BLACK);
+
+        shipImg = new ImageIcon(getClass().getResource("./images/ship.png")).getImage();
+        alienImg= new ImageIcon(getClass().getResource("./images/alien.png")).getImage();
+        alienCyanImg = new ImageIcon(getClass().getResource("./images/alien-cyan.png")).getImage();
+        alienMagentaImg = new ImageIcon(getClass().getResource("./images/alien-magenta.png")).getImage();
+        alienYellowImg = new ImageIcon(getClass().getResource("./images/alien-yellow.png")).getImage();
+
+
+
     }
 }
